@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import { useDropzone } from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCloudUploadAlt } from "@fortawesome/free-solid-svg-icons";
-import Navbar from "@/app/components/Navbar/Navbar";
+import {Navbar} from "@/app/components/Navbar/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 import { ChangeEvent } from "react";
@@ -53,6 +53,7 @@ export interface Values {
 }
 
 export default function Formulario() {
+  const router = useRouter();
   //Estados
 
   const [focused, setFocused] = useState<string | null>(null);
@@ -88,14 +89,14 @@ export default function Formulario() {
     price: 0,
     description: "",
   });
-
+  
   //Dropzone
   const { acceptedFiles, getRootProps, getInputProps, isDragActive } =
-    useDropzone({
-      accept: {
-        "image/png": [".png"],
-        "image/jpg": [".jpg"],
-        "image/jpeg": [".jpeg"],
+  useDropzone({
+    accept: {
+      "image/png": [".png"],
+      "image/jpg": [".jpg"],
+      "image/jpeg": [".jpeg"],
       },
       multiple: true,
       onDrop: (files) => {
@@ -255,28 +256,14 @@ export default function Formulario() {
     // }
   }, []);
 
-  if (isAuthenticated) {return (
+  
+  
+  useEffect(() => {
+    if (!isAuthenticated) {} else {
+      router.push('/Views/Login');
+    }
 
-
-  useEffect(() => {}, []);
-
-  // useEffect(() => {
-  //   // veo  si  hay  algo en  el  local 
-  //       const dataInLocalStorage = localStorage.getItem('user');
-    
-  //       if (dataInLocalStorage) {
-  //         console.log("esto es ellocal storage:", dataInLocalStorage);
-  //       } else {
-  //         console.log("Holis");
-  //       }
-  //     }, []); 
-    
-  //     if (!localStorage.getItem('tuClave')) {
-  //       return null; 
-  //       // si  no  hay  nada  no renderiza nada 
-  //       // aqui  tien  que  renderizar un  componente  que  te mande  a  otro lado 
-    
-  //     }
+  }, []),
 
   return (
 
@@ -599,7 +586,4 @@ export default function Formulario() {
       </div>
     </div>
   );
-} else {
-  const router = useRouter();
-  router.push('/Views/Login');
-}} 
+} 
