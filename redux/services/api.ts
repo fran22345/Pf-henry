@@ -1,9 +1,11 @@
 import { User } from "@/app/shared/userTypes";
+import { User } from "@/app/shared/userTypes";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 require("dotenv").config();
+require("dotenv").config();
 
-const { DEPLOY_BACK_URL } = process.env;
+const  DEPLOY_BACK_URL = 'http://localhost:3001';
 
 export interface Post {
   days: number | null;
@@ -22,6 +24,40 @@ export interface Post {
   id: string;
   images: string[];
   userId: string | null;
+  score: number | null;
+}
+export interface Score {
+  id: string,
+  type: string
+  score: string;
+  feedBack: number;
+  postId: string;
+  userId: string;
+}
+
+export interface Users {
+  id: string;
+  rol: string;
+  username: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  phone: null;
+  personalId: null;
+  deletedAt:Date | string;
+}
+
+interface Users {
+  id: string;
+  rol: string;
+  username: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  phone: null;
+  personalId: null;
 }
 
 interface Users {
@@ -39,7 +75,13 @@ interface Users {
 export const postsApi = createApi({
   reducerPath: "postsApi",
   refetchOnFocus: true,
+
   baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL }),
+
+
+  baseQuery: fetchBaseQuery({ baseUrl: DEPLOY_BACK_URL }),
+  //baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001" }),
+  
 
   endpoints: (builder) => ({
     getPostsByCondition: builder.query<Post[], string>({
@@ -62,7 +104,7 @@ export const postsApi = createApi({
     updatePost: builder.mutation<
       Post,
       { id: number; updatedPost: Partial<Post> }
-    >({
+      >({
       query: ({ id, updatedPost }) => ({
         url: `posts/${id}`,
         method: "PATCH",
@@ -90,3 +132,4 @@ export const {
   useDeletePostMutation, // DELETE
   useGetUserQuery,
 } = postsApi;
+
