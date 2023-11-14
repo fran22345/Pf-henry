@@ -1,6 +1,6 @@
 import { User } from "@/app/shared/userTypes";
-import { User } from "@/app/shared/userTypes";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import exp from "constants";
 
 require("dotenv").config();
 require("dotenv").config();
@@ -48,40 +48,14 @@ export interface Users {
   deletedAt:Date | string;
 }
 
-interface Users {
-  id: string;
-  rol: string;
-  username: string;
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  phone: null;
-  personalId: null;
-}
 
-interface Users {
-  id: string;
-  rol: string;
-  username: string;
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  phone: null;
-  personalId: null;
-}
+
 
 export const postsApi = createApi({
   reducerPath: "postsApi",
   refetchOnFocus: true,
 
   baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL }),
-
-
-  baseQuery: fetchBaseQuery({ baseUrl: DEPLOY_BACK_URL }),
-  //baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001" }),
-  
 
   endpoints: (builder) => ({
     getPostsByCondition: builder.query<Post[], string>({
