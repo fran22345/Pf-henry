@@ -19,7 +19,7 @@ export interface Post {
   images: string[];
   userId: string | null;
   score: number | null;
-  deletedAt:string
+  deleteAt:string
 }
 
 export interface Score {
@@ -59,7 +59,7 @@ export const postsApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL }),
   endpoints: (builder) => ({
     getPostsByCondition: builder.query<Post[], string>({
-      query: (condition) => `/posts/condition/${condition}`,
+      query: (condition) => `/posts/${condition}`,
     }),
     getPosts: builder.query<Post[], string>({
       query: () => "/posts",
@@ -74,7 +74,6 @@ export const postsApi = createApi({
     getPost: builder.query<Post, string | number>({
       query: (id) => `/posts/${id}`,
     }),
-
     updatePost: builder.mutation<
       Post,
       { id: number; updatedPost: Partial<Post> }
@@ -114,6 +113,12 @@ export const postsApi = createApi({
         body: newScore,
       }),
     }),
+    getPostsAll: builder.query<Post[], string>({
+      query: () => ({
+        url: '/posts/all',
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -126,4 +131,5 @@ export const {
   useDeletePostMutation, // DELETE
   useDeleteUserMutation,
   useGetUserQuery,
+  useGetPostsAllQuery,
 } = postsApi;

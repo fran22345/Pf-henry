@@ -7,12 +7,9 @@ import Alquiler from "../components/Tables/Alquiler";
 import Venta from "../components/Tables/Venta";
 import Usuarios from "../components/Tables/Usuarios";
 import { useState } from "react";
-import {
-  authenticateUserWithTokenAsync,
-  logout,
-} from "../../../redux/features/UserSlice";
+import { authenticateUserWithTokenAsync } from "../../../redux/features/UserSlice";
 import { AppDispatch, RootState } from "../../../redux/store";
-import { User } from "@/app/shared/userTypes";
+
 
 const TablesPage = () => {
   const router = useRouter();
@@ -26,9 +23,9 @@ const TablesPage = () => {
   useEffect(() => {
     const loged = localStorage.getItem("keys");
     let keys;
-  
+
     loged ? (keys = JSON.parse(loged)) : null;
-  
+
     if (!isAuthenticated) {
       if (keys) {
         dispatch(authenticateUserWithTokenAsync());
@@ -45,8 +42,6 @@ const TablesPage = () => {
       }
     }
   }, [isAuthenticated, user?.rol]);
-  
-  
 
   if (show) {
     return (

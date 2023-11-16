@@ -16,7 +16,6 @@ export const store = configureStore({
       home: homeReducer,
       selec: selecReducer,
       user: userReducer,
-      favorites: favoriteReducer,
       scores: scoresReducer,
       [postsApi.reducerPath]: postsApi.reducer, 
       favoritesApi: favoritesApi.reducer,
