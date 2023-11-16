@@ -1,11 +1,22 @@
+enum Rols {
+    admin = "admin",
+    user = "user",
+  }
+  type RolType = Rols;
+
 export interface User {
+    id: string;
     username: string;
     email: string;
     firstName: string;
     lastName: string;
     phone?: number;
     personalId?: number;
-    rol?:string;
+//<<<<<<< nueva_rama_para_trabajar
+    rol?: string;
+//=======
+//    rol:RolType;
+//>>>>>>> dev
 }  
 
 export interface Register {
@@ -21,12 +32,10 @@ export interface Register {
 export interface Login {
     email: string;
     password: string;
-    token?:string;
-    storedToken?:string;
 }
 
 export interface UserState {
     isAuthenticated: boolean;
     user: User | null;
-    rol:string
+    keys: { token: string, email: string, responseData?:string, cookies?:string  } | null;
   }
