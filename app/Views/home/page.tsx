@@ -57,7 +57,6 @@ const Home = () => {
     if(userId)
       dispatch(getFavorite(userId));
   };
-  console.log("este es  el  user",user);
   
   return (
     <div>

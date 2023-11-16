@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import { useDropzone } from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCloudUploadAlt } from "@fortawesome/free-solid-svg-icons";
-import {Navbar} from "@/app/components/Navbar/Navbar";
+import Navbar from "@/app/components/Navbar/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 import { ChangeEvent } from "react";
@@ -54,8 +54,6 @@ export interface Values {
 }
 
 export default function Formulario() {
-  const router = useRouter();
-  //Estados
   const router = useRouter();
 
   const [focused, setFocused] = useState<string | null>(null);
@@ -237,7 +235,7 @@ export default function Formulario() {
           icon: "error",
           title: "Error al Crear",
           showConfirmButton: false,
-          timer: 1500,<<<<<<< preLanding
+          timer: 1500,
         });
       }
     } catch (error) {
