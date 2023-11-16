@@ -7,9 +7,10 @@ import { Post } from "@/redux/services/api";
 
 
 const Alquiler = () => {
-
-  const { data: posts } = useGetPostsByConditionQuery("rent");
+  const { data: posts } = useGetPostsByConditionQuery('');
   const [property, setProperty] = useState<Post[]>([])
+  const rentPosts = posts?.filter((item) => item.condition === "rent");
+  console.log(property);
   
   const handleClick = async (id: string) => {
     try {
@@ -26,6 +27,13 @@ const Alquiler = () => {
             property.id === id ? { ...property, deletedAt: new Date().toISOString() } : property
             )
             );
+            Swal.fire({
+              icon: "success",
+              title: "Eliminado exitosamente",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+            });
             
             await axios.delete(
               `${process.env.NEXT_PUBLIC_BACKEND_URL}/posts/${id}`)
@@ -43,8 +51,8 @@ const Alquiler = () => {
   };
   
   useEffect(() => {
-    setProperty(posts || [])
-  }, [property]);
+    setProperty( rentPosts || [])
+  }, [posts]);
   
   return (
     <div className="rounded-sm border border-stroke text-center bg-white pb-2.5 shadow-default sm:px-7.5 xl:pb-1">
@@ -81,15 +89,7 @@ const Alquiler = () => {
           </div>
         </div>
 
-        {property?.map((rent, key) => (
-          <div
-            className={`grid grid-cols-3 sm:grid-cols-5 ${
-              key === (posts && posts.length ? posts.length - 1 : undefined)
-                ? ""
-                : "border-b border-stroke "
-            }`}
-            key={key}
-          >
+        {property?.map((rent, key) => (<div className={`grid grid-cols-3 sm:grid-cols-5 ${ key === (posts && posts.length ? posts.length - 1 : undefined) ? "":"border-b border-stroke " }`} key={key}>
             <div className="flex items-center justify-center gap-3 p-2.5 xl:p-5">
               <div className="flex-shrink-0">
                 {rent.images && rent.images[0] ? (

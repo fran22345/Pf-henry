@@ -24,16 +24,29 @@ const TablesPage = () => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      setShow(true);
-      if (user?.rol !== "admin") {
-        router.push("/notfound");
+    const loged = localStorage.getItem("keys");
+    let keys;
+  
+    loged ? (keys = JSON.parse(loged)) : null;
+  
+    if (!isAuthenticated) {
+      if (keys) {
+        dispatch(authenticateUserWithTokenAsync());
+      } else {
+        alert("Debes iniciar sesión para poder publicar");
+        router.push("/Views/Login");
       }
     } else {
-      alert("No estas autenticado");
-      router.push("/");
+      const userRole = user?.rol; 
+      if (userRole !== "admin") {
+        router.push("/notfound");
+      } else {
+        setShow(true);
+      }
     }
-  }, [isAuthenticated, user?.rol, router]);
+  }, [isAuthenticated, user?.rol]);
+  
+  
 
   if (show) {
     return (
